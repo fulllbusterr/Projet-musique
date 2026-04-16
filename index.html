@@ -710,6 +710,190 @@
     user-select: none;
   }
 
+  /* ===== VIDEO SECTION ===== */
+  .video-section {
+    max-width: 780px;
+    margin: 0 auto 5rem;
+    padding: 0 2rem;
+  }
+
+  .video-label {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .video-label-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(201,168,76,0.3));
+  }
+
+  .video-label-line.right {
+    background: linear-gradient(90deg, rgba(201,168,76,0.3), transparent);
+  }
+
+  .video-label-text {
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    white-space: nowrap;
+  }
+
+  .video-frame-outer {
+    border: 1px solid rgba(201,168,76,0.35);
+    padding: 10px;
+    background: rgba(0,0,0,0.4);
+    position: relative;
+  }
+
+  .video-frame-outer::before, .video-frame-outer::after {
+    content: '';
+    position: absolute;
+    inset: 4px;
+    border: 1px solid rgba(201,168,76,0.1);
+    pointer-events: none;
+  }
+
+  .video-corner { position: absolute; width: 20px; height: 20px; border-color: var(--gold); border-style: solid; z-index: 2; }
+  .video-corner.tl { top: 4px; left: 4px; border-width: 2px 0 0 2px; }
+  .video-corner.tr { top: 4px; right: 4px; border-width: 2px 2px 0 0; }
+  .video-corner.bl { bottom: 4px; left: 4px; border-width: 0 0 2px 2px; }
+  .video-corner.br { bottom: 4px; right: 4px; border-width: 0 2px 2px 0; }
+
+  .video-thumb-wrap {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%;
+    background: #0a0503;
+    overflow: hidden;
+    cursor: pointer;
+  }
+
+  .video-thumb-wrap iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: none;
+  }
+
+  .video-thumb-wrap.playing iframe { display: block; }
+  .video-thumb-wrap.playing .video-play-overlay { display: none; }
+
+  .video-play-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    background: linear-gradient(135deg, rgba(10,5,2,0.85) 0%, rgba(30,15,5,0.75) 100%);
+    transition: background 0.3s ease;
+  }
+
+  .video-thumb-wrap:hover .video-play-overlay {
+    background: linear-gradient(135deg, rgba(10,5,2,0.7) 0%, rgba(30,15,5,0.6) 100%);
+  }
+
+  .play-btn-circle {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    border: 2px solid var(--gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(201,168,76,0.1);
+    transition: all 0.3s ease;
+    box-shadow: 0 0 30px rgba(201,168,76,0.3);
+  }
+
+  .video-thumb-wrap:hover .play-btn-circle {
+    background: rgba(201,168,76,0.2);
+    box-shadow: 0 0 50px rgba(201,168,76,0.5);
+    transform: scale(1.08);
+  }
+
+  .play-btn-circle::after {
+    content: '';
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 14px 0 14px 24px;
+    border-color: transparent transparent transparent var(--gold);
+    margin-left: 5px;
+  }
+
+  .video-overlay-title {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1rem;
+    color: var(--cream);
+    text-align: center;
+    padding: 0 2rem;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.8);
+    max-width: 400px;
+  }
+
+  .video-overlay-sub {
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(201,168,76,0.7);
+  }
+
+  .video-caption {
+    margin-top: 0.8rem;
+    text-align: center;
+    font-family: 'Special Elite', cursive;
+    font-size: 0.75rem;
+    color: rgba(201,168,76,0.45);
+    letter-spacing: 0.05em;
+  }
+
+  .video-caption {
+    margin-top: 0.8rem;
+    text-align: center;
+    font-family: 'Special Elite', cursive;
+    font-size: 0.75rem;
+    color: rgba(201,168,76,0.45);
+    letter-spacing: 0.05em;
+  }
+
+  .video-fallback-tab {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.8rem;
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(201,168,76,0.6);
+    text-decoration: none;
+    border: 1px solid rgba(201,168,76,0.2);
+    padding: 0.4rem 1rem;
+    background: rgba(201,168,76,0.04);
+    transition: all 0.25s ease;
+  }
+
+  .video-fallback-tab:hover {
+    color: var(--gold);
+    border-color: rgba(201,168,76,0.5);
+    background: rgba(201,168,76,0.08);
+  }
+
+  .tab-icon {
+    font-size: 0.85rem;
+  }
+
   /* ===== SCROLLBAR ===== */
   ::-webkit-scrollbar { width: 6px; }
   ::-webkit-scrollbar-track { background: var(--dark); }
@@ -787,6 +971,32 @@
   <div class="timeline-container">
     <div class="timeline-line"></div>
     <div id="events-container"></div>
+    <!-- ===== VIDEO ===== -->
+    <div class="video-section">
+      <div class="video-label">
+        <div class="video-label-line"></div>
+        <span class="video-label-text">📽 À regarder</span>
+        <div class="video-label-line right"></div>
+      </div>
+      <div class="video-frame-outer">
+        <div class="video-corner tl"></div>
+        <div class="video-corner tr"></div>
+        <div class="video-corner bl"></div>
+        <div class="video-corner br"></div>
+        <div class="video-thumb-wrap" id="videoWrap" onclick="playVideo()">
+          <div class="video-play-overlay">
+            <div class="play-btn-circle"></div>
+            <p class="video-overlay-title">Le jazz moderne et les débuts du rap aux États-Unis</p>
+            <p class="video-overlay-sub">▶ Lancer la vidéo</p>
+          </div>
+          <iframe id="ytFrame" src="" allowfullscreen allow="autoplay; encrypted-media"></iframe>
+        </div>
+      </div>
+      <a class="video-fallback-tab" href="https://www.youtube.com/watch?v=_GRjUwMib-Y" target="_blank" rel="noopener">
+        <span class="tab-icon">↗</span> Ouvrir sur YouTube
+      </a>
+    </div>
+
     <div class="timeline-footer">
       <p>La musique n'a pas de frontières — seulement des évolutions</p>
     </div>
@@ -1000,6 +1210,13 @@ function closeModalDirect() {
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') closeModalDirect();
 });
+
+function playVideo() {
+  const wrap = document.getElementById('videoWrap');
+  const frame = document.getElementById('ytFrame');
+  frame.src = 'https://www.youtube.com/embed/_GRjUwMib-Y?autoplay=1';
+  wrap.classList.add('playing');
+}
 
 // Floating music notes
 const noteChars = ['♩', '♪', '♫', '♬', '𝅗𝅥', '𝄞', '𝄢'];
