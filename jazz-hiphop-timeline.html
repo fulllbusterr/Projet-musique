@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jazz & Hip-Hop — Frise Chronologique</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Special+Elite&family=Oswald:wght@400;700&family=Abril+Fatface&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --brick: #1a0f0a;
+    --dark: #0d0805;
+    --gold: #c9a84c;
+    --gold-light: #e8c96a;
+    --cream: #f2e8d0;
+    --brown: #5c3d2e;
+    --warm: #8b4a2f;
+    --smoke: rgba(200,168,100,0.08);
+    --jazz: #e8c96a;
+    --rap: #d4472a;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--dark);
+    color: var(--cream);
+    font-family: 'Special Elite', cursive;
+    overflow-x: hidden;
+    cursor: default;
+  }
+
+  /* ===== GRAIN OVERLAY ===== */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.08'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.4;
+  }
+
+  /* ===== BRICK BACKGROUND ===== */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 30px,
+        rgba(0,0,0,0.3) 30px,
+        rgba(0,0,0,0.3) 32px
+      ),
+      repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 60px,
+        rgba(0,0,0,0.2) 60px,
+        rgba(0,0,0,0.2) 62px
+      );
+    background-color: #1a0a06;
+    pointer-events: none;
+    z-index: -1;
+    opacity: 0.6;
+  }
+
+  /* ===== FLOATING NOTES ===== */
+  .music-notes {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    overflow: hidden;
+  }
+  .note {
+    position: absolute;
+    font-size: 1.5rem;
+    color: rgba(201,168,76,0.12);
+    animation: floatNote linear infinite;
+    user-select: none;
+  }
+
+  @keyframes floatNote {
+    0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 0.3; }
+    100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+  }
+
+  /* ===== LANDING PAGE ===== */
+  #landing {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 2rem;
+    position: relative;
+    background:
+      radial-gradient(ellipse at 20% 50%, rgba(139,74,47,0.2) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 30%, rgba(201,168,76,0.1) 0%, transparent 50%);
+  }
+
+  .vinyl-bg {
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    background:
+      repeating-radial-gradient(
+        circle,
+        #1a1a1a 0px,
+        #1a1a1a 2px,
+        #111 2px,
+        #111 4px
+      );
+    opacity: 0.15;
+    animation: spinVinyl 30s linear infinite;
+    pointer-events: none;
+  }
+
+  @keyframes spinVinyl {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  .stamp-frame {
+    border: 4px solid var(--gold);
+    border-radius: 4px;
+    padding: 3rem 4rem;
+    position: relative;
+    background: rgba(10,5,2,0.7);
+    box-shadow:
+      0 0 60px rgba(201,168,76,0.2),
+      inset 0 0 40px rgba(0,0,0,0.5);
+    max-width: 800px;
+  }
+
+  .stamp-frame::before, .stamp-frame::after {
+    content: '';
+    position: absolute;
+    inset: 8px;
+    border: 1px solid rgba(201,168,76,0.4);
+    border-radius: 2px;
+    pointer-events: none;
+  }
+
+  .corner-deco {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    border-color: var(--gold);
+    border-style: solid;
+  }
+  .corner-deco.tl { top: 14px; left: 14px; border-width: 2px 0 0 2px; }
+  .corner-deco.tr { top: 14px; right: 14px; border-width: 2px 2px 0 0; }
+  .corner-deco.bl { bottom: 14px; left: 14px; border-width: 0 0 2px 2px; }
+  .corner-deco.br { bottom: 14px; right: 14px; border-width: 0 2px 2px 0; }
+
+  .landing-eyebrow {
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.4em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.3s;
+  }
+
+  .landing-title {
+    font-family: 'Abril Fatface', serif;
+    font-size: clamp(2rem, 5vw, 3.8rem);
+    line-height: 1.1;
+    color: var(--cream);
+    text-shadow: 3px 3px 0 rgba(0,0,0,0.5), 0 0 40px rgba(201,168,76,0.3);
+    margin-bottom: 0.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.6s;
+  }
+
+  .landing-title span {
+    color: var(--gold);
+    display: block;
+  }
+
+  .landing-sub {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1rem;
+    color: rgba(242,232,208,0.6);
+    margin: 1.2rem 0 2.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.9s;
+  }
+
+  .icons-row {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    font-size: 1.8rem;
+    margin-bottom: 2.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 1.1s;
+  }
+
+  .btn-explore {
+    font-family: 'Oswald', sans-serif;
+    font-size: 1rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    background: var(--gold);
+    color: #0d0805;
+    border: none;
+    padding: 1rem 3rem;
+    cursor: pointer;
+    position: relative;
+    clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+    transition: all 0.3s ease;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 1.3s;
+    font-weight: 700;
+  }
+
+  .btn-explore:hover {
+    background: var(--gold-light);
+    box-shadow: 0 0 30px rgba(201,168,76,0.5);
+    transform: translateY(-2px);
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ===== TIMELINE PAGE ===== */
+  #timeline-page {
+    display: none;
+    padding: 4rem 1rem;
+    min-height: 100vh;
+    position: relative;
+  }
+
+  .page-header {
+    text-align: center;
+    margin-bottom: 5rem;
+  }
+
+  .page-header h2 {
+    font-family: 'Abril Fatface', serif;
+    font-size: clamp(1.8rem, 4vw, 3rem);
+    color: var(--gold);
+    text-shadow: 2px 2px 0 rgba(0,0,0,0.5);
+  }
+
+  .legend {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  .legend-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+  }
+
+  .legend-dot.jazz { background: var(--jazz); box-shadow: 0 0 8px var(--jazz); }
+  .legend-dot.rap { background: var(--rap); box-shadow: 0 0 8px var(--rap); }
+
+  /* ===== FRISE ===== */
+  .timeline-container {
+    max-width: 900px;
+    margin: 0 auto;
+    position: relative;
+    padding: 0 2rem;
+  }
+
+  /* Vertical line */
+  .timeline-line {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom,
+      transparent,
+      var(--gold) 5%,
+      var(--gold) 95%,
+      transparent
+    );
+    transform: translateX(-50%);
+    box-shadow: 0 0 10px rgba(201,168,76,0.4);
+  }
+
+  /* Each event */
+  .timeline-event {
+    display: flex;
+    align-items: center;
+    position: relative;
+    margin-bottom: 4rem;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .timeline-event.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .timeline-event:nth-child(odd) {
+    flex-direction: row-reverse;
+  }
+
+  /* Node on the line */
+  .event-node {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+  }
+
+  .event-node:hover {
+    transform: translateX(-50%) scale(1.2);
+  }
+
+  .node-ring {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: 2px solid;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--dark);
+    transition: all 0.3s ease;
+    box-shadow: 0 0 15px currentColor;
+  }
+
+  .node-ring.jazz { border-color: var(--jazz); color: var(--jazz); }
+  .node-ring.rap { border-color: var(--rap); color: var(--rap); }
+
+  .node-inner {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+
+  .node-ring.jazz .node-inner { background: var(--jazz); }
+  .node-ring.rap .node-inner { background: var(--rap); }
+
+  .event-node:hover .node-ring {
+    transform: scale(1.3);
+    box-shadow: 0 0 25px currentColor;
+  }
+
+  /* Year label */
+  .event-year {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: -1.8rem;
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: rgba(201,168,76,0.7);
+    white-space: nowrap;
+  }
+
+  /* Card */
+  .event-card {
+    width: calc(50% - 50px);
+    padding: 1.2rem 1.5rem;
+    background: rgba(15,8,4,0.85);
+    border: 1px solid rgba(201,168,76,0.25);
+    position: relative;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(4px);
+  }
+
+  .timeline-event:nth-child(odd) .event-card {
+    margin-right: auto;
+  }
+
+  .timeline-event:nth-child(even) .event-card {
+    margin-left: auto;
+  }
+
+  .event-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .event-card.jazz::before { background: var(--jazz); }
+  .event-card.rap::before { background: var(--rap); }
+
+  .event-card:hover {
+    border-color: rgba(201,168,76,0.6);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.5), 0 0 20px rgba(201,168,76,0.1);
+  }
+
+  .event-card:hover::before { opacity: 1; }
+
+  /* Connector line from card to node */
+  .event-card::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 40px;
+    height: 1px;
+    background: rgba(201,168,76,0.3);
+  }
+
+  .timeline-event:nth-child(even) .event-card::after {
+    left: 100%;
+  }
+
+  .timeline-event:nth-child(odd) .event-card::after {
+    right: 100%;
+  }
+
+  .card-genre {
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    margin-bottom: 0.3rem;
+  }
+  .card-genre.jazz { color: var(--jazz); }
+  .card-genre.rap { color: var(--rap); }
+
+  .card-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--cream);
+    margin-bottom: 0.2rem;
+  }
+
+  .card-year-inline {
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.75rem;
+    color: rgba(201,168,76,0.6);
+    letter-spacing: 0.1em;
+  }
+
+  /* ===== MODAL ===== */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(5,2,1,0.92);
+    z-index: 2000;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    backdrop-filter: blur(6px);
+  }
+
+  .modal-overlay.active {
+    display: flex;
+    animation: fadeIn 0.3s ease;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  .modal {
+    max-width: 600px;
+    width: 100%;
+    background: linear-gradient(135deg, #1a0d08 0%, #0d0805 100%);
+    border: 1px solid rgba(201,168,76,0.4);
+    position: relative;
+    padding: 0;
+    animation: modalIn 0.4s cubic-bezier(0.34,1.56,0.64,1);
+    overflow: hidden;
+  }
+
+  @keyframes modalIn {
+    from { opacity: 0; transform: scale(0.85) translateY(20px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+  }
+
+  .modal::before {
+    content: '';
+    position: absolute;
+    inset: 6px;
+    border: 1px solid rgba(201,168,76,0.15);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .modal-banner {
+    height: 8px;
+    width: 100%;
+  }
+
+  .modal-banner.jazz { background: linear-gradient(90deg, var(--brown), var(--gold), var(--brown)); }
+  .modal-banner.rap { background: linear-gradient(90deg, #5a1a0f, var(--rap), #5a1a0f); }
+
+  .modal-body {
+    padding: 2.5rem;
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+  }
+
+  .modal-avatar {
+    width: 120px;
+    height: 120px;
+    flex-shrink: 0;
+    border-radius: 2px;
+    position: relative;
+    overflow: hidden;
+    border: 2px solid rgba(201,168,76,0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 4rem;
+    background: rgba(0,0,0,0.4);
+  }
+
+  .modal-info { flex: 1; }
+
+  .modal-genre {
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+  .modal-genre.jazz { color: var(--jazz); }
+  .modal-genre.rap { color: var(--rap); }
+
+  .modal-name {
+    font-family: 'Abril Fatface', serif;
+    font-size: 1.8rem;
+    color: var(--cream);
+    line-height: 1.1;
+    margin-bottom: 0.3rem;
+    text-shadow: 2px 2px 0 rgba(0,0,0,0.5);
+  }
+
+  .modal-dates {
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.15em;
+    color: rgba(201,168,76,0.7);
+    margin-bottom: 1rem;
+  }
+
+  .modal-divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(201,168,76,0.3), transparent);
+    margin: 1rem 0;
+  }
+
+  .modal-desc {
+    font-family: 'Special Elite', cursive;
+    font-size: 0.9rem;
+    line-height: 1.7;
+    color: rgba(242,232,208,0.8);
+  }
+
+  .modal-instruments {
+    margin-top: 1.2rem;
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .instrument-tag {
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.8rem;
+    border: 1px solid rgba(201,168,76,0.3);
+    color: rgba(201,168,76,0.8);
+    background: rgba(201,168,76,0.05);
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 32px;
+    height: 32px;
+    background: rgba(201,168,76,0.1);
+    border: 1px solid rgba(201,168,76,0.3);
+    color: var(--gold);
+    font-size: 1.1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    z-index: 10;
+    font-family: monospace;
+  }
+
+  .modal-close:hover {
+    background: rgba(201,168,76,0.2);
+    transform: scale(1.1);
+  }
+
+  /* ===== ERA MARKERS ===== */
+  .era-marker {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(201,168,76,0.4);
+    background: var(--dark);
+    padding: 0.2rem 0.6rem;
+    border: 1px solid rgba(201,168,76,0.15);
+    white-space: nowrap;
+    z-index: 5;
+  }
+
+  /* ===== BACK BTN ===== */
+  .back-btn {
+    position: fixed;
+    top: 1.5rem;
+    left: 1.5rem;
+    z-index: 100;
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    background: rgba(10,5,2,0.8);
+    border: 1px solid rgba(201,168,76,0.3);
+    padding: 0.6rem 1.2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: none;
+  }
+
+  .back-btn:hover {
+    background: rgba(201,168,76,0.1);
+    border-color: var(--gold);
+  }
+
+  /* ===== TIMELINE END ===== */
+  .timeline-footer {
+    text-align: center;
+    padding: 4rem 0 2rem;
+    position: relative;
+  }
+
+  .timeline-footer::before {
+    content: '♦';
+    display: block;
+    font-size: 1.5rem;
+    color: var(--gold);
+    margin-bottom: 1rem;
+    opacity: 0.5;
+  }
+
+  .timeline-footer p {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 0.9rem;
+    color: rgba(201,168,76,0.5);
+    letter-spacing: 0.1em;
+  }
+
+  /* Graffiti deco */
+  .graffiti-deco {
+    position: fixed;
+    font-family: 'Abril Fatface', serif;
+    font-size: 8rem;
+    color: rgba(201,168,76,0.03);
+    pointer-events: none;
+    transform: rotate(-15deg);
+    z-index: 0;
+    user-select: none;
+  }
+
+  /* ===== SCROLLBAR ===== */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--dark); }
+  ::-webkit-scrollbar-thumb { background: rgba(201,168,76,0.3); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: rgba(201,168,76,0.5); }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 600px) {
+    .stamp-frame { padding: 2rem 1.5rem; }
+    .timeline-event { flex-direction: column !important; }
+    .event-card { width: calc(100% - 40px); margin-left: 40px !important; margin-right: 0 !important; }
+    .timeline-line { left: 20px; }
+    .event-node { left: 20px; }
+    .event-year { left: 20px; }
+    .event-card::after { display: none; }
+    .modal-body { flex-direction: column; }
+    .modal-avatar { width: 80px; height: 80px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Floating notes -->
+<div class="music-notes" id="notes"></div>
+
+<!-- Graffiti bg -->
+<div class="graffiti-deco" style="top:10%; left:-2%">JAZZ</div>
+<div class="graffiti-deco" style="bottom:15%; right:-2%; transform:rotate(12deg)">HIP HOP</div>
+
+<!-- ===== LANDING ===== -->
+<section id="landing">
+  <div class="vinyl-bg"></div>
+  <div class="stamp-frame">
+    <div class="corner-deco tl"></div>
+    <div class="corner-deco tr"></div>
+    <div class="corner-deco bl"></div>
+    <div class="corner-deco br"></div>
+
+    <p class="landing-eyebrow">🎺 New York City • 1920 – 2026 🎧</p>
+    <h1 class="landing-title">
+      Les Rappeurs & Jazzmen
+      <span>qui ont tout changé</span>
+    </h1>
+    <p class="landing-sub">Des plus grands jazzmen de leur époque<br>aux pionniers du hip-hop américain</p>
+    <div class="icons-row">
+      <span title="Vinyle">🎵</span>
+      <span title="Saxophone">🎷</span>
+      <span title="Trompette">🎺</span>
+      <span title="Piano">🎹</span>
+      <span title="Casque DJ">🎧</span>
+      <span title="Microphone">🎤</span>
+    </div>
+    <button class="btn-explore" onclick="showTimeline()">▶ Explorer la frise</button>
+  </div>
+</section>
+
+<!-- ===== TIMELINE ===== -->
+<section id="timeline-page">
+  <button class="back-btn" id="backBtn" onclick="showLanding()">← Accueil</button>
+
+  <div class="page-header">
+    <h2>Frise Chronologique 1920 – 2026</h2>
+    <div class="legend">
+      <div class="legend-item">
+        <div class="legend-dot jazz"></div>
+        <span>Jazz</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot rap"></div>
+        <span>Hip-Hop / Rap</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="timeline-container">
+    <div class="timeline-line"></div>
+    <div id="events-container"></div>
+    <div class="timeline-footer">
+      <p>La musique n'a pas de frontières — seulement des évolutions</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== MODAL ===== -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+  <div class="modal" id="modal">
+    <div class="modal-banner" id="modalBanner"></div>
+    <button class="modal-close" onclick="closeModalDirect()">✕</button>
+    <div class="modal-body">
+      <div class="modal-avatar" id="modalAvatar"></div>
+      <div class="modal-info">
+        <p class="modal-genre" id="modalGenre"></p>
+        <h2 class="modal-name" id="modalName"></h2>
+        <p class="modal-dates" id="modalDates"></p>
+        <div class="modal-divider"></div>
+        <p class="modal-desc" id="modalDesc"></p>
+        <div class="modal-instruments" id="modalTags"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const artists = [
+  {
+    year: 1926,
+    name: "Miles Davis",
+    genre: "jazz",
+    emoji: "🎺",
+    dates: "né en 1926 · mort en 1991",
+    desc: "Trompettiste légendaire, Miles Davis a révolutionné le jazz à travers plusieurs ères stylistiques : bebop, cool jazz, hard bop, jazz fusion. Son album 'Kind of Blue' (1959) reste le disque de jazz le plus vendu de tous les temps. Une figure absolument incontournable de l'histoire de la musique du XXe siècle.",
+    tags: ["Trompette", "Jazz Fusion", "Cool Jazz", "Bebop"]
+  },
+  {
+    year: 1926,
+    name: "John Coltrane",
+    genre: "jazz",
+    emoji: "🎷",
+    dates: "né en 1926 · mort en 1967",
+    desc: "Saxophoniste d'une puissance spirituelle unique, John Coltrane a repoussé toutes les limites du jazz. De son style 'sheets of sound' au free jazz de 'A Love Supreme', il a transformé le saxophone en instrument de méditation et de transcendance. Une légende absolue.",
+    tags: ["Saxophone", "Free Jazz", "Avant-garde", "Spirituel"]
+  },
+  {
+    year: 1940,
+    name: "Herbie Hancock",
+    genre: "jazz",
+    emoji: "🎹",
+    dates: "né en 1940",
+    desc: "Pianiste et compositeur visionnaire, Herbie Hancock a su fusionner jazz, funk, soul et électronique. Du côté du jazz acoustique avec Miles Davis aux expérimentations électroniques de 'Head Hunters', en passant par le hit pop 'Rockit', il ne cesse d'innover et de redéfinir les frontières musicales.",
+    tags: ["Piano", "Jazz Fusion", "Funk", "Électro"]
+  },
+  {
+    year: 1941,
+    name: "Chick Corea",
+    genre: "jazz",
+    emoji: "🎹",
+    dates: "né en 1941 · mort en 2021",
+    desc: "Pianiste majeur du jazz fusion, Chick Corea a fondé Return to Forever, groupe emblématique qui mélange jazz, rock et musique latine. Brillant improvisateur, il a collaboré avec Miles Davis et influencé des générations de musiciens avec son toucher unique et sa créativité débordante.",
+    tags: ["Piano", "Jazz Fusion", "Latin Jazz", "Électronique"]
+  },
+  {
+    year: 1957,
+    name: "Afrika Bambaataa",
+    genre: "rap",
+    emoji: "🎧",
+    dates: "né en 1957 · South Bronx, NY",
+    desc: "Considéré comme l'un des pères fondateurs du hip-hop, Afrika Bambaataa a structuré cette culture naissante en créant la Zulu Nation dans le Bronx. Son titre 'Planet Rock' (1982), fusion electro-hip-hop, a changé la face de la musique urbaine pour toujours.",
+    tags: ["DJ", "Electro", "Fondateur Hip-Hop", "Zulu Nation"]
+  },
+  {
+    year: 1958,
+    name: "Grandmaster Flash",
+    genre: "rap",
+    emoji: "🎧",
+    dates: "né en 1958 · Bronx, NY",
+    desc: "Pionnier absolu du DJing, Grandmaster Flash a inventé des techniques révolutionnaires comme le scratching, le cutting et le punch phrasing. Avec 'The Message' (1982), son groupe introduit des thématiques sociales dans le rap, ouvrant la voie à toute une génération de MC engagés.",
+    tags: ["DJ", "Scratch", "Pionnier", "Hip-Hop Old School"]
+  },
+  {
+    year: 1959,
+    name: "Kurtis Blow",
+    genre: "rap",
+    emoji: "🎤",
+    dates: "né en 1959 · Harlem, NY",
+    desc: "Un des premiers rappeurs à signer un contrat avec une major (Mercury Records), Kurtis Blow a ouvert la voie au succès commercial du rap. Son single 'The Breaks' (1980) devient le premier single rap certifié or, prouvant que le hip-hop pouvait toucher le grand public.",
+    tags: ["MC", "Old School", "Commercial", "Harlem"]
+  },
+  {
+    year: 1972,
+    name: "The Notorious B.I.G.",
+    genre: "rap",
+    emoji: "🎤",
+    dates: "né en 1972 · mort en 1997 · Brooklyn, NY",
+    desc: "Christopher Wallace, alias Biggie Smalls, est considéré par beaucoup comme le plus grand rappeur de tous les temps. Son flow cinématique, ses métaphores cinglantes et sa capacité à narrer la rue avec une précision chirurgicale ont fait de lui une icône éternelle du hip-hop des années 90.",
+    tags: ["East Coast", "Lyriciste", "Icône", "Brooklyn"]
+  },
+  {
+    year: 1979,
+    name: "The Sugarhill Gang",
+    genre: "rap",
+    emoji: "🎤",
+    dates: "formé en 1979 · New Jersey",
+    desc: "Avec 'Rapper's Delight' (1979), The Sugarhill Gang a réalisé le premier grand succès commercial du rap. Ce titre de 14 minutes a introduit le hip-hop à des millions d'auditeurs à travers le monde, donnant au genre sa première visibilité internationale et posant les bases de ce qui allait devenir une révolution culturelle.",
+    tags: ["Pionnier", "Rapper's Delight", "Old School", "Commercial"]
+  },
+  {
+    year: 1980,
+    name: "Ibrahim Maalouf",
+    genre: "jazz",
+    emoji: "🎺",
+    dates: "né en 1980 · Beyrouth / Paris",
+    desc: "Trompettiste franco-libanais au talent exceptionnel, Ibrahim Maalouf fusionne avec brio le jazz contemporain et la musique orientale. Formé au Conservatoire de Paris, il développe une technique unique sur une trompette à quarts de tons, créant un univers musical à la fois universel et profondément ancré dans ses racines.",
+    tags: ["Trompette", "Jazz Contemporain", "Oriental", "Fusion"]
+  },
+  {
+    year: 1983,
+    name: "Run-D.M.C.",
+    genre: "rap",
+    emoji: "🎧",
+    dates: "formé en 1983 · Queens, NY",
+    desc: "Run-D.M.C. a propulsé le hip-hop sur la scène mondiale en franchissant toutes les barrières culturelles. Leur collaboration avec Aerosmith sur 'Walk This Way' (1986) a brisé le mur entre rock et rap. Premiers rappeurs à faire la couverture de Rolling Stone, ils ont ouvert des portes qui ne se sont jamais refermées.",
+    tags: ["Queens", "Crossover", "Old School", "Icônes"]
+  }
+];
+
+// Sort by year
+artists.sort((a, b) => a.year - b.year);
+
+function showTimeline() {
+  document.getElementById('landing').style.display = 'none';
+  document.getElementById('timeline-page').style.display = 'block';
+  document.getElementById('backBtn').style.display = 'block';
+  buildTimeline();
+  setTimeout(observeEvents, 100);
+}
+
+function showLanding() {
+  document.getElementById('landing').style.display = 'flex';
+  document.getElementById('timeline-page').style.display = 'none';
+  document.getElementById('backBtn').style.display = 'none';
+}
+
+function buildTimeline() {
+  const container = document.getElementById('events-container');
+  container.innerHTML = '';
+
+  artists.forEach((artist, i) => {
+    const el = document.createElement('div');
+    el.className = 'timeline-event';
+    el.innerHTML = `
+      <div class="event-card ${artist.genre}" onclick="openModal(${i})">
+        <p class="card-genre ${artist.genre}">${artist.genre === 'jazz' ? '🎷 Jazz' : '🎧 Hip-Hop'}</p>
+        <p class="card-name">${artist.name}</p>
+        <p class="card-year-inline">${artist.year}</p>
+      </div>
+      <div class="event-node" onclick="openModal(${i})">
+        <div class="node-ring ${artist.genre}">
+          <div class="node-inner"></div>
+        </div>
+        <div class="event-year">${artist.year}</div>
+      </div>
+    `;
+    container.appendChild(el);
+  });
+}
+
+function observeEvents() {
+  const events = document.querySelectorAll('.timeline-event');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.2 });
+  events.forEach(ev => observer.observe(ev));
+}
+
+function openModal(index) {
+  const a = artists[index];
+  document.getElementById('modalBanner').className = `modal-banner ${a.genre}`;
+  document.getElementById('modalAvatar').textContent = a.emoji;
+  document.getElementById('modalGenre').textContent = a.genre === 'jazz' ? '🎷 Jazz' : '🎧 Hip-Hop / Rap';
+  document.getElementById('modalGenre').className = `modal-genre ${a.genre}`;
+  document.getElementById('modalName').textContent = a.name;
+  document.getElementById('modalDates').textContent = a.dates;
+  document.getElementById('modalDesc').textContent = a.desc;
+
+  const tagsEl = document.getElementById('modalTags');
+  tagsEl.innerHTML = a.tags.map(t => `<span class="instrument-tag">${t}</span>`).join('');
+
+  document.getElementById('modalOverlay').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal(e) {
+  if (e.target === document.getElementById('modalOverlay')) {
+    closeModalDirect();
+  }
+}
+
+function closeModalDirect() {
+  document.getElementById('modalOverlay').classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+// Keyboard close
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeModalDirect();
+});
+
+// Floating music notes
+const noteChars = ['♩', '♪', '♫', '♬', '𝅗𝅥', '𝄞', '𝄢'];
+const notesContainer = document.getElementById('notes');
+
+function spawnNote() {
+  const note = document.createElement('div');
+  note.className = 'note';
+  note.textContent = noteChars[Math.floor(Math.random() * noteChars.length)];
+  note.style.left = Math.random() * 100 + 'vw';
+  note.style.animationDuration = (12 + Math.random() * 18) + 's';
+  note.style.animationDelay = (Math.random() * 5) + 's';
+  note.style.fontSize = (1 + Math.random() * 1.5) + 'rem';
+  notesContainer.appendChild(note);
+  setTimeout(() => note.remove(), 30000);
+}
+
+// Spawn notes periodically
+for (let i = 0; i < 10; i++) setTimeout(spawnNote, i * 1000);
+setInterval(spawnNote, 2500);
+</script>
+</body>
+</html>
