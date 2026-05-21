@@ -710,6 +710,34 @@
     user-select: none;
   }
 
+  .modal-music-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-top: 1.2rem;
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: #0d0805;
+    background: var(--gold);
+    padding: 0.6rem 1.4rem;
+    clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%);
+    transition: all 0.25s ease;
+    font-weight: 700;
+  }
+
+  .modal-music-btn:hover {
+    background: var(--gold-light);
+    box-shadow: 0 0 20px rgba(201,168,76,0.4);
+    transform: translateY(-1px);
+  }
+
+  .music-btn-icon {
+    font-size: 0.8rem;
+  }
+
   /* ===== VIDEO SECTION ===== */
   .video-section {
     max-width: 780px;
@@ -1017,6 +1045,10 @@
         <div class="modal-divider"></div>
         <p class="modal-desc" id="modalDesc"></p>
         <div class="modal-instruments" id="modalTags"></div>
+        <a class="modal-music-btn" id="modalMusic" href="#" target="_blank" rel="noopener">
+          <span class="music-btn-icon">▶</span>
+          <span>Écouter sur YouTube</span>
+        </a>
       </div>
     </div>
   </div>
@@ -1031,7 +1063,8 @@ const artists = [
     emoji: "🎺",
     dates: "né en 1926 · mort en 1991",
     desc: "Trompettiste légendaire, Miles Davis a révolutionné le jazz à travers plusieurs ères stylistiques : bebop, cool jazz, hard bop, jazz fusion. Son album 'Kind of Blue' (1959) reste le disque de jazz le plus vendu de tous les temps. Une figure absolument incontournable de l'histoire de la musique du XXe siècle.",
-    tags: ["Trompette", "Jazz Fusion", "Cool Jazz", "Bebop"]
+    tags: ["Trompette", "Jazz Fusion", "Cool Jazz", "Bebop"],
+    music: "https://www.youtube.com/watch?v=zqNTltOGh5c"
   },
   {
     year: 1926,
@@ -1040,7 +1073,8 @@ const artists = [
     emoji: "🎷",
     dates: "né en 1926 · mort en 1967",
     desc: "Saxophoniste d'une puissance spirituelle unique, John Coltrane a repoussé toutes les limites du jazz. De son style 'sheets of sound' au free jazz de 'A Love Supreme', il a transformé le saxophone en instrument de méditation et de transcendance. Une légende absolue.",
-    tags: ["Saxophone", "Free Jazz", "Avant-garde", "Spirituel"]
+    tags: ["Saxophone", "Free Jazz", "Avant-garde", "Spirituel"],
+    music: "https://www.youtube.com/watch?v=Dmx2WuUPVcs"
   },
   {
     year: 1940,
@@ -1049,7 +1083,8 @@ const artists = [
     emoji: "🎹",
     dates: "né en 1940",
     desc: "Pianiste et compositeur visionnaire, Herbie Hancock a su fusionner jazz, funk, soul et électronique. Du côté du jazz acoustique avec Miles Davis aux expérimentations électroniques de 'Head Hunters', en passant par le hit pop 'Rockit', il ne cesse d'innover et de redéfinir les frontières musicales.",
-    tags: ["Piano", "Jazz Fusion", "Funk", "Électro"]
+    tags: ["Piano", "Jazz Fusion", "Funk", "Électro"],
+    music: "https://youtu.be/iqomTAiRnVM?si=V2ZsepffTsrlB1Ud"
   },
   {
     year: 1941,
@@ -1058,7 +1093,8 @@ const artists = [
     emoji: "🎹",
     dates: "né en 1941 · mort en 2021",
     desc: "Pianiste majeur du jazz fusion, Chick Corea a fondé Return to Forever, groupe emblématique qui mélange jazz, rock et musique latine. Brillant improvisateur, il a collaboré avec Miles Davis et influencé des générations de musiciens avec son toucher unique et sa créativité débordante.",
-    tags: ["Piano", "Jazz Fusion", "Latin Jazz", "Électronique"]
+    tags: ["Piano", "Jazz Fusion", "Latin Jazz", "Électronique"],
+    music: "https://youtu.be/sEhQTjgoTdU?si=5bMwYBNEu2RlZHx4"
   },
   {
     year: 1957,
@@ -1067,7 +1103,8 @@ const artists = [
     emoji: "🎧",
     dates: "né en 1957 · South Bronx, NY",
     desc: "Considéré comme l'un des pères fondateurs du hip-hop, Afrika Bambaataa a structuré cette culture naissante en créant la Zulu Nation dans le Bronx. Son titre 'Planet Rock' (1982), fusion electro-hip-hop, a changé la face de la musique urbaine pour toujours.",
-    tags: ["DJ", "Electro", "Fondateur Hip-Hop", "Zulu Nation"]
+    tags: ["DJ", "Electro", "Fondateur Hip-Hop", "Zulu Nation"],
+    music: "https://youtu.be/9J3lwZjHenA?si=kKZZ6wzLRYxrhHBl"
   },
   {
     year: 1958,
@@ -1076,7 +1113,8 @@ const artists = [
     emoji: "🎧",
     dates: "né en 1958 · Bronx, NY",
     desc: "Pionnier absolu du DJing, Grandmaster Flash a inventé des techniques révolutionnaires comme le scratching, le cutting et le punch phrasing. Avec 'The Message' (1982), son groupe introduit des thématiques sociales dans le rap, ouvrant la voie à toute une génération de MC engagés.",
-    tags: ["DJ", "Scratch", "Pionnier", "Hip-Hop Old School"]
+    tags: ["DJ", "Scratch", "Pionnier", "Hip-Hop Old School"],
+    music: "https://www.youtube.com/watch?v=PobrSpMwKk4"
   },
   {
     year: 1959,
@@ -1085,7 +1123,8 @@ const artists = [
     emoji: "🎤",
     dates: "né en 1959 · Harlem, NY",
     desc: "Un des premiers rappeurs à signer un contrat avec une major (Mercury Records), Kurtis Blow a ouvert la voie au succès commercial du rap. Son single 'The Breaks' (1980) devient le premier single rap certifié or, prouvant que le hip-hop pouvait toucher le grand public.",
-    tags: ["MC", "Old School", "Commercial", "Harlem"]
+    tags: ["MC", "Old School", "Commercial", "Harlem"],
+    music: "https://www.youtube.com/watch?v=SXv__s3YUMw"
   },
   {
     year: 1972,
@@ -1094,7 +1133,8 @@ const artists = [
     emoji: "🎤",
     dates: "né en 1972 · mort en 1997 · Brooklyn, NY",
     desc: "Christopher Wallace, alias Biggie Smalls, est considéré par beaucoup comme le plus grand rappeur de tous les temps. Son flow cinématique, ses métaphores cinglantes et sa capacité à narrer la rue avec une précision chirurgicale ont fait de lui une icône éternelle du hip-hop des années 90.",
-    tags: ["East Coast", "Lyriciste", "Icône", "Brooklyn"]
+    tags: ["East Coast", "Lyriciste", "Icône", "Brooklyn"],
+    music: "https://www.youtube.com/watch?v=_JZom_gVfuw"
   },
   {
     year: 1979,
@@ -1103,7 +1143,8 @@ const artists = [
     emoji: "🎤",
     dates: "formé en 1979 · New Jersey",
     desc: "Avec 'Rapper's Delight' (1979), The Sugarhill Gang a réalisé le premier grand succès commercial du rap. Ce titre de 14 minutes a introduit le hip-hop à des millions d'auditeurs à travers le monde, donnant au genre sa première visibilité internationale et posant les bases de ce qui allait devenir une révolution culturelle.",
-    tags: ["Pionnier", "Rapper's Delight", "Old School", "Commercial"]
+    tags: ["Pionnier", "Rapper's Delight", "Old School", "Commercial"],
+    music: "https://www.youtube.com/watch?v=mcCK99wHrk0"
   },
   {
     year: 1980,
@@ -1112,7 +1153,8 @@ const artists = [
     emoji: "🎺",
     dates: "né en 1980 · Beyrouth / Paris",
     desc: "Trompettiste franco-libanais au talent exceptionnel, Ibrahim Maalouf fusionne avec brio le jazz contemporain et la musique orientale. Formé au Conservatoire de Paris, il développe une technique unique sur une trompette à quarts de tons, créant un univers musical à la fois universel et profondément ancré dans ses racines.",
-    tags: ["Trompette", "Jazz Contemporain", "Oriental", "Fusion"]
+    tags: ["Trompette", "Jazz Contemporain", "Oriental", "Fusion"],
+    music: "https://www.youtube.com/watch?v=HXzv7P7qGdM"
   },
   {
     year: 1983,
@@ -1121,7 +1163,8 @@ const artists = [
     emoji: "🎧",
     dates: "formé en 1983 · Queens, NY",
     desc: "Run-D.M.C. a propulsé le hip-hop sur la scène mondiale en franchissant toutes les barrières culturelles. Leur collaboration avec Aerosmith sur 'Walk This Way' (1986) a brisé le mur entre rock et rap. Premiers rappeurs à faire la couverture de Rolling Stone, ils ont ouvert des portes qui ne se sont jamais refermées.",
-    tags: ["Queens", "Crossover", "Old School", "Icônes"]
+    tags: ["Queens", "Crossover", "Old School", "Icônes"],
+    music: "https://www.youtube.com/watch?v=l-O5IHVhWj0"
   }
 ];
 
@@ -1190,6 +1233,14 @@ function openModal(index) {
 
   const tagsEl = document.getElementById('modalTags');
   tagsEl.innerHTML = a.tags.map(t => `<span class="instrument-tag">${t}</span>`).join('');
+
+  const musicEl = document.getElementById('modalMusic');
+  if (a.music) {
+    musicEl.href = a.music;
+    musicEl.style.display = 'inline-flex';
+  } else {
+    musicEl.style.display = 'none';
+  }
 
   document.getElementById('modalOverlay').classList.add('active');
   document.body.style.overflow = 'hidden';
